@@ -4,29 +4,29 @@ using System.Collections.Generic;
 
 namespace RaCollection
 {
-	public class RaCollection<TItem> : IList<TItem>
-	{
-		public delegate void ItemHandler(TItem item, int index);
-		public delegate void ItemSourceHandler(TItem item, int index, RaCollection<TItem> source);
+	public delegate void ItemHandler<TItem>(TItem item, int index);
+	public delegate void ItemSourceHandler<TItem>(TItem item, int index, RaCollection<TItem> source);
 
-		public event ItemSourceHandler AddedItemEvent;
-		public event ItemSourceHandler RemovedItemEvent;
+	public class RaCollection<TItem> : IList<TItem>, IReadOnlyRaCollection<TItem>
+	{
+		public event ItemSourceHandler<TItem> AddedItemEvent;
+		public event ItemSourceHandler<TItem> RemovedItemEvent;
 
 		private readonly List<TItem> _items = new List<TItem>();
-		private readonly ItemHandler _onAddItem = null;
-		private readonly ItemHandler _onRemoveItem = null;
+		private readonly ItemHandler<TItem> _onAddItem = null;
+		private readonly ItemHandler<TItem> _onRemoveItem = null;
 
 		public int Count => _items.Count;
 
 		public bool IsReadOnly => false;
 
-		public RaCollection(ItemHandler onAddItem = null, ItemHandler onRemoveItem = null)
+		public RaCollection(ItemHandler<TItem> onAddItem = null, ItemHandler<TItem> onRemoveItem = null)
 		{
 			_onAddItem = onAddItem;
 			_onRemoveItem = onRemoveItem;
 		}
 
-		public RaCollection(TItem[] items, ItemHandler onAddItem = null, ItemHandler onRemoveItem = null)
+		public RaCollection(TItem[] items, ItemHandler<TItem> onAddItem = null, ItemHandler<TItem> onRemoveItem = null)
 			: this(onAddItem, onRemoveItem)
 		{
 			if(items != null && items.Length > 0)
@@ -40,85 +40,14 @@ namespace RaCollection
 
 		#region Helper
 
-		public void ForEach(ItemHandler action)
+		public bool TryFindItem<T>(out T item, Predicate<T> predicate = null)
 		{
-			for(int i = 0, c = _items.Count; i < c; i++)
-			{
-				action(_items[i], i);
-			}
+			return RaCollectionUtils.TryFindItem(this, out item, predicate);
 		}
 
-		public void ForEachReverse(ItemHandler action)
+		public List<T> FindItems<T>(Predicate<T> predicate)
 		{
-			for(int i = _items.Count - 1; i >= 0; i--)
-			{
-				action(_items[i], i);
-			}
-		}
-
-		public bool TryGetItem(out TItem item, Predicate<TItem> predicate = null)
-		{
-			for(int i = 0, c = _items.Count; i < c; i++)
-			{
-				item = _items[i];
-				if(predicate == null || predicate(item))
-				{
-					return true;
-				}
-			}
-
-			item = default;
-			return false;
-		}
-
-		public bool TryGetItem<T>(out T item, Predicate<T> predicate = null)
-			where T : TItem
-		{
-			for(int i = 0, c = _items.Count; i < c; i++)
-			{
-				TItem rawItem = _items[i];
-				if(rawItem is T castedItem && (predicate == null || predicate(castedItem)))
-				{
-					item = castedItem;
-					return true;
-				}
-			}
-
-			item = default;
-			return false;
-		}
-
-		public List<TItem> GetItems(Predicate<TItem> predicate)
-		{
-			List<TItem> returnValue = new List<TItem>();
-
-			for(int i = 0, c = _items.Count; i < c; i++)
-			{
-				TItem item = _items[i];
-				if(predicate == null || predicate(item))
-				{
-					returnValue.Add(item);
-				}
-			}
-
-			return returnValue;
-		}
-
-		public List<T> GetItems<T>(Predicate<T> predicate)
-			where T : TItem
-		{
-			List<T> returnValue = new List<T>();
-
-			for(int i = 0, c = _items.Count; i < c; i++)
-			{
-				TItem rawItem = _items[i];
-				if(rawItem is T castedItem && (predicate == null || predicate(castedItem)))
-				{
-					returnValue.Add(castedItem);
-				}
-			}
-
-			return returnValue;
+			return RaCollectionUtils.FindItems(this, predicate);
 		}
 
 		#endregion
@@ -221,11 +150,17 @@ namespace RaCollection
 			RemovedItemEvent?.Invoke(item, index, this);
 		}
 
-
-
 		protected virtual bool IsValidAddCheck(TItem item, string operationName) => true;
 		protected virtual bool IsValidRemoveCheck(TItem item, string operationName) => true;
 
 		#endregion
+	}
+
+	public interface IReadOnlyRaCollection<TItem> : IReadOnlyList<TItem>
+	{
+		public event ItemSourceHandler<TItem> AddedItemEvent;
+		public event ItemSourceHandler<TItem> RemovedItemEvent;
+
+		bool Contains(TItem item);
 	}
 }

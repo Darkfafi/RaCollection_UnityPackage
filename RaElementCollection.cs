@@ -4,7 +4,16 @@ using System.Linq;
 
 namespace RaCollection
 {
-	public class RaElementCollection<TElement> : RaCollection<TElement>
+	public interface IReadOnlyRaElementCollection<TElement> : IReadOnlyRaCollection<TElement>
+		where TElement : IRaCollectionElement
+	{
+		bool Contains(string id);
+		bool TryGetItem(string id, out TElement element);
+		bool TryFindItem<T>(string id, out T element);
+		string[] GetAllIds();
+	}
+
+	public class RaElementCollection<TElement> : RaCollection<TElement>, IReadOnlyRaElementCollection<TElement>
 		where TElement : IRaCollectionElement
 	{
 		private readonly Dictionary<string, TElement> _idToElementsMap = new Dictionary<string, TElement>();
@@ -18,7 +27,7 @@ namespace RaCollection
 			return _idToElementsMap.TryGetValue(id, out element);
 		}
 
-		public bool TryGetItem<T>(string id, out T element)
+		public bool TryFindItem<T>(string id, out T element)
 		{
 			if(_idToElementsMap.TryGetValue(id, out TElement rawElement) &&
 				rawElement is T castedElement)
@@ -35,12 +44,25 @@ namespace RaCollection
 
 		#endregion
 
-		public RaElementCollection(ItemHandler onAddItem = null, ItemHandler onRemoveItem = null)
+		#region Core
+
+		public bool Remove(string id)
+		{
+			if(_idToElementsMap.TryGetValue(id, out TElement item))
+			{
+				return Remove(item);
+			}
+			return false;
+		}
+
+		#endregion
+
+		public RaElementCollection(ItemHandler<TElement> onAddItem = null, ItemHandler<TElement> onRemoveItem = null)
 			: base(onAddItem, onRemoveItem)
 		{
 		}
 
-		public RaElementCollection(TElement[] items, ItemHandler onAddItem = null, ItemHandler onRemoveItem = null)
+		public RaElementCollection(TElement[] items, ItemHandler<TElement> onAddItem = null, ItemHandler<TElement> onRemoveItem = null)
 			: base(items, onAddItem, onRemoveItem)
 		{
 			if(items != null && items.Length > 0)
