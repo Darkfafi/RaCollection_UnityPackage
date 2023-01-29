@@ -9,6 +9,7 @@ namespace RaCollection
 	{
 		bool Contains(string id);
 		bool TryGetItem(string id, out TElement element);
+		bool TryGetItem<T>(string id, out T element) where T : TElement;
 		bool TryFindItem<T>(string id, out T element);
 		string[] GetAllIds();
 	}
@@ -25,6 +26,12 @@ namespace RaCollection
 		public bool TryGetItem(string id, out TElement element)
 		{
 			return _idToElementsMap.TryGetValue(id, out element);
+		}
+
+		public bool TryGetItem<T>(string id, out T element)
+			where T : TElement
+		{
+			return TryFindItem(id, out element);
 		}
 
 		public bool TryFindItem<T>(string id, out T element)
