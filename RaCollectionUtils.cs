@@ -37,6 +37,12 @@ namespace RaCollection
 			return false;
 		}
 
+		public static bool TryGetItem<TItem, T>(this IList<TItem> self, out T item, Predicate<T> predicate = null)
+			where T : TItem
+		{
+			return TryFindItem(self, out item, predicate);
+		}
+
 		public static bool TryFindItem<TItem, T>(this IList<TItem> self, out T item, Predicate<T> predicate = null)
 		{
 			for(int i = 0, c = self.Count; i < c; i++)
@@ -67,6 +73,12 @@ namespace RaCollection
 			}
 
 			return returnValue;
+		}
+
+		public static List<T> GetItems<TItem, T>(this IList<TItem> self, Predicate<T> predicate)
+			where T : TItem
+		{
+			return FindItems(self, predicate);
 		}
 
 		public static List<T> FindItems<TItem, T>(this IList<TItem> self, Predicate<T> predicate)
@@ -118,6 +130,12 @@ namespace RaCollection
 			return false;
 		}
 
+		public static bool TryGetItemReadOnly<TItem, T>(this IReadOnlyList<TItem> self, out T item, Predicate<T> predicate = null)
+			where T : TItem
+		{
+			return TryFindItemReadOnly(self, out item, predicate);
+		}
+
 		public static bool TryFindItemReadOnly<TItem, T>(this IReadOnlyList<TItem> self, out T item, Predicate<T> predicate = null)
 		{
 			for(int i = 0, c = self.Count; i < c; i++)
@@ -148,6 +166,12 @@ namespace RaCollection
 			}
 
 			return returnValue;
+		}
+
+		public static List<T> GetItemsReadOnly<TItem, T>(this IReadOnlyList<TItem> self, Predicate<T> predicate)
+		   where T : TItem
+		{
+			return FindItemsReadOnly(self, predicate);
 		}
 
 		public static List<T> FindItemsReadOnly<TItem, T>(this IReadOnlyList<TItem> self, Predicate<T> predicate)
