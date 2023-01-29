@@ -40,6 +40,18 @@ namespace RaCollection
 
 		#region Helper
 
+		public bool TryGetItem<T>(out T item, Predicate<T> predicate = null)
+			where T : TItem
+		{
+			return RaCollectionUtils.TryGetItem(this, out item, predicate);
+		}
+
+		public List<T> GetItems<T>(Predicate<T> predicate)
+			where T : TItem
+		{
+			return RaCollectionUtils.GetItems(this, predicate);
+		}
+
 		public bool TryFindItem<T>(out T item, Predicate<T> predicate = null)
 		{
 			return RaCollectionUtils.TryFindItem(this, out item, predicate);
