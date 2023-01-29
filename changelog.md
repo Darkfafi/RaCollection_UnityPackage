@@ -1,5 +1,9 @@
 # Changelog RaCollection
 
+
+## v1.1.2 - 29/01/2023
+* Reintroduced TryGetItem for safe explicit casting for RaElementCollections
+
 ## v1.1.1 - 29/01/2023
 * Reintroduced TryGetItem and GetItems which were present in v1.0.0. So TryFindItem can be used for interfaces, and TryGetItem can be used for safe explicit casting
 
