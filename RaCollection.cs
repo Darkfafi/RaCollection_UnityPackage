@@ -5,16 +5,15 @@ using System.Collections.Generic;
 namespace RaCollection
 {
 	public delegate void ItemHandler<TItem>(TItem item, int index);
-	public delegate void ItemSourceHandler<TItem>(TItem item, int index, RaCollection<TItem> source);
 
-	public class RaCollection<TItem> : IList<TItem>, IReadOnlyRaCollection<TItem>
+	public class RaCollection<TItem> : IList<TItem>, IReadOnlyRaCollection<TItem>, IDisposable
 	{
-		public event ItemSourceHandler<TItem> AddedItemEvent;
-		public event ItemSourceHandler<TItem> RemovedItemEvent;
+		public event ItemHandler<TItem> AddedItemEvent;
+		public event ItemHandler<TItem> RemovedItemEvent;
 
-		private readonly List<TItem> _items = new List<TItem>();
-		private readonly ItemHandler<TItem> _onAddItem = null;
-		private readonly ItemHandler<TItem> _onRemoveItem = null;
+		private List<TItem> _items = new List<TItem>();
+		private ItemHandler<TItem> _onAddItem = null;
+		private ItemHandler<TItem> _onRemoveItem = null;
 
 		public int Count => _items.Count;
 
@@ -65,6 +64,11 @@ namespace RaCollection
 		#endregion
 
 		#region Core
+
+		public void Sort(Comparison<TItem> comparison)
+		{
+			_items.Sort(comparison);
+		}
 
 		public TItem this[int index]
 		{
@@ -145,6 +149,16 @@ namespace RaCollection
 			}
 		}
 
+		public virtual void Dispose()
+		{
+			AddedItemEvent = null;
+			RemovedItemEvent = null;
+			_onAddItem = null;
+			_onRemoveItem = null;
+			_items.Clear();
+			_items = null;
+		}
+
 		public void CopyTo(TItem[] array, int arrayIndex) => _items.CopyTo(array, arrayIndex);
 
 		public IEnumerator<TItem> GetEnumerator() => _items.GetEnumerator();
@@ -153,13 +167,13 @@ namespace RaCollection
 		protected virtual void OnAddItem(TItem item, int index)
 		{
 			_onAddItem?.Invoke(item, index);
-			AddedItemEvent?.Invoke(item, index, this);
+			AddedItemEvent?.Invoke(item, index);
 		}
 
 		protected virtual void OnRemoveItem(TItem item, int index)
 		{
 			_onRemoveItem?.Invoke(item, index);
-			RemovedItemEvent?.Invoke(item, index, this);
+			RemovedItemEvent?.Invoke(item, index);
 		}
 
 		protected virtual bool IsValidAddCheck(TItem item, string operationName) => true;
@@ -170,8 +184,8 @@ namespace RaCollection
 
 	public interface IReadOnlyRaCollection<TItem> : IReadOnlyList<TItem>
 	{
-		public event ItemSourceHandler<TItem> AddedItemEvent;
-		public event ItemSourceHandler<TItem> RemovedItemEvent;
+		public event ItemHandler<TItem> AddedItemEvent;
+		public event ItemHandler<TItem> RemovedItemEvent;
 
 		bool Contains(TItem item);
 	}

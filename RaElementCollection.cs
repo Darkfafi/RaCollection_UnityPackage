@@ -17,7 +17,7 @@ namespace RaCollection
 	public class RaElementCollection<TElement> : RaCollection<TElement>, IReadOnlyRaElementCollection<TElement>
 		where TElement : IRaCollectionElement
 	{
-		private readonly Dictionary<string, TElement> _idToElementsMap = new Dictionary<string, TElement>();
+		private Dictionary<string, TElement> _idToElementsMap = new Dictionary<string, TElement>();
 
 		#region Helper
 
@@ -60,6 +60,13 @@ namespace RaCollection
 				return Remove(item);
 			}
 			return false;
+		}
+
+		public override void Dispose()
+		{
+			_idToElementsMap.Clear();
+			_idToElementsMap = null;
+			base.Dispose();
 		}
 
 		#endregion

@@ -92,6 +92,11 @@ namespace RaCollection
 			return false;
 		}
 
+		public void Sort(Comparison<Entry> comparison)
+		{
+			_entries.Sort(comparison);
+		}
+
 		public void Clear()
 		{
 			_entries.Clear();
@@ -101,7 +106,7 @@ namespace RaCollection
 		{
 			_onRegister = null;
 			_onUnregister = null;
-			_entries.Clear();
+			_entries.Dispose();
 			_entries = null;
 		}
 
