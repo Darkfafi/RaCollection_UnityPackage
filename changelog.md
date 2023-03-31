@@ -1,5 +1,12 @@
 # Changelog RaCollection
 
+## v1.3.0 - 31/03/2023
+* Added Disposing functionality to RaCollection & RaElementCollection
+* Added Sorting functionality to RaCollection & RaElementCollection
+* Made it so the Added / Removed item callbacks no longer pass the mutable list
+* Added non-index variants of the ForEach / ForEachReversed util methods
+* Added RaPriorityCollection, which is a RaCollection which is sorted by priority
+
 ## v1.2.0 - 13/02/2023
 * Added RaLocator, which is a RaElementCollection which can contain every type of entry
 
