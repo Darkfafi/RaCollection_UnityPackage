@@ -1,5 +1,7 @@
 # Changelog RaCollection
 
+## v1.2.0 - 13/02/2023
+* Added RaLocator, which is a RaElementCollection which can contain every type of entry
 
 ## v1.1.2 - 29/01/2023
 * Reintroduced TryGetItem for safe explicit casting for RaElementCollections
