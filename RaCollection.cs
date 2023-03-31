@@ -4,28 +4,30 @@ using System.Collections.Generic;
 
 namespace RaCollection
 {
-	public delegate void ItemHandler<TItem>(TItem item, int index);
+	public delegate void ItemHandler<TItem>(TItem item);
+	public delegate void ItemsHandler<TItem>(TItem newItem, TItem oldItem);
+	public delegate void ItemIndexHandler<TItem>(TItem item, int index);
 
 	public class RaCollection<TItem> : IList<TItem>, IReadOnlyRaCollection<TItem>, IDisposable
 	{
-		public event ItemHandler<TItem> AddedItemEvent;
-		public event ItemHandler<TItem> RemovedItemEvent;
+		public event ItemIndexHandler<TItem> AddedItemEvent;
+		public event ItemIndexHandler<TItem> RemovedItemEvent;
 
 		private List<TItem> _items = new List<TItem>();
-		private ItemHandler<TItem> _onAddItem = null;
-		private ItemHandler<TItem> _onRemoveItem = null;
+		private ItemIndexHandler<TItem> _onAddItem = null;
+		private ItemIndexHandler<TItem> _onRemoveItem = null;
 
 		public int Count => _items.Count;
 
 		public bool IsReadOnly => false;
 
-		public RaCollection(ItemHandler<TItem> onAddItem = null, ItemHandler<TItem> onRemoveItem = null)
+		public RaCollection(ItemIndexHandler<TItem> onAddItem = null, ItemIndexHandler<TItem> onRemoveItem = null)
 		{
 			_onAddItem = onAddItem;
 			_onRemoveItem = onRemoveItem;
 		}
 
-		public RaCollection(TItem[] items, ItemHandler<TItem> onAddItem = null, ItemHandler<TItem> onRemoveItem = null)
+		public RaCollection(TItem[] items, ItemIndexHandler<TItem> onAddItem = null, ItemIndexHandler<TItem> onRemoveItem = null)
 			: this(onAddItem, onRemoveItem)
 		{
 			if(items != null && items.Length > 0)
@@ -184,8 +186,8 @@ namespace RaCollection
 
 	public interface IReadOnlyRaCollection<TItem> : IReadOnlyList<TItem>
 	{
-		public event ItemHandler<TItem> AddedItemEvent;
-		public event ItemHandler<TItem> RemovedItemEvent;
+		public event ItemIndexHandler<TItem> AddedItemEvent;
+		public event ItemIndexHandler<TItem> RemovedItemEvent;
 
 		bool Contains(TItem item);
 	}

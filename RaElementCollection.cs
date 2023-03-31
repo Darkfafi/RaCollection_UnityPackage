@@ -71,12 +71,12 @@ namespace RaCollection
 
 		#endregion
 
-		public RaElementCollection(ItemHandler<TElement> onAddItem = null, ItemHandler<TElement> onRemoveItem = null)
+		public RaElementCollection(ItemIndexHandler<TElement> onAddItem = null, ItemIndexHandler<TElement> onRemoveItem = null)
 			: base(onAddItem, onRemoveItem)
 		{
 		}
 
-		public RaElementCollection(TElement[] items, ItemHandler<TElement> onAddItem = null, ItemHandler<TElement> onRemoveItem = null)
+		public RaElementCollection(TElement[] items, ItemIndexHandler<TElement> onAddItem = null, ItemIndexHandler<TElement> onRemoveItem = null)
 			: base(items, onAddItem, onRemoveItem)
 		{
 			if(items != null && items.Length > 0)

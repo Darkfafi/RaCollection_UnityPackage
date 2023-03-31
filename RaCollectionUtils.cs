@@ -10,11 +10,27 @@ namespace RaCollection
 		{
 			for(int i = 0, c = self.Count; i < c; i++)
 			{
+				action(self[i]);
+			}
+		}
+
+		public static void ForEach<TItem>(this IList<TItem> self, ItemIndexHandler<TItem> action)
+		{
+			for(int i = 0, c = self.Count; i < c; i++)
+			{
 				action(self[i], i);
 			}
 		}
 
 		public static void ForEachReverse<TItem>(this IList<TItem> self, ItemHandler<TItem> action)
+		{
+			for(int i = self.Count - 1; i >= 0; i--)
+			{
+				action(self[i]);
+			}
+		}
+
+		public static void ForEachReverse<TItem>(this IList<TItem> self, ItemIndexHandler<TItem> action)
 		{
 			for(int i = self.Count - 1; i >= 0; i--)
 			{
@@ -98,8 +114,15 @@ namespace RaCollection
 		}
 
 		// ReadOnly List
-
 		public static void ForEachReadOnly<TItem>(this IReadOnlyList<TItem> self, ItemHandler<TItem> action)
+		{
+			for(int i = 0, c = self.Count; i < c; i++)
+			{
+				action(self[i]);
+			}
+		}
+
+		public static void ForEachReadOnly<TItem>(this IReadOnlyList<TItem> self, ItemIndexHandler<TItem> action)
 		{
 			for(int i = 0, c = self.Count; i < c; i++)
 			{
@@ -108,6 +131,14 @@ namespace RaCollection
 		}
 
 		public static void ForEachReverseReadOnly<TItem>(this IReadOnlyList<TItem> self, ItemHandler<TItem> action)
+		{
+			for(int i = self.Count - 1; i >= 0; i--)
+			{
+				action(self[i]);
+			}
+		}
+
+		public static void ForEachReverseReadOnly<TItem>(this IReadOnlyList<TItem> self, ItemIndexHandler<TItem> action)
 		{
 			for(int i = self.Count - 1; i >= 0; i--)
 			{
