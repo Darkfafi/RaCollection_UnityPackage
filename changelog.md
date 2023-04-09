@@ -1,5 +1,13 @@
 # Changelog RaCollection
 
+## v1.4.0 - 09/04//2023
+* Implemented Queue & Stack data structures into RaCollection
+* Added HasItems & IsInBounds util methods
+* Added RaCollectionRandomUtils
+   * CreateRandom() // Creates a Random class based on a seed. Null == a random seed
+   * Shuffle() // Shuffles a list
+   * GetRandomItem() // Gets a random item in the list based on the weight presented in the IRaCollectionWeightedItem imlementation. A higher weight == higher probability of selection
+
 ## v1.3.0 - 31/03/2023
 * Added Disposing functionality to RaCollection & RaElementCollection
 * Added Sorting functionality to RaCollection & RaElementCollection
