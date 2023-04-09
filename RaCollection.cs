@@ -180,7 +180,7 @@ namespace RaCollection
 					return true;
 				}
 			}
-			catch(IndexOutOfRangeException indexException)
+			catch(ArgumentOutOfRangeException indexException)
 			{
 				if(throwIndexOutOfRangeException)
 				{

@@ -79,13 +79,7 @@ namespace RaCollection
 		public RaElementCollection(TElement[] items, ItemIndexHandler<TElement> onAddItem = null, ItemIndexHandler<TElement> onRemoveItem = null)
 			: base(items, onAddItem, onRemoveItem)
 		{
-			if(items != null && items.Length > 0)
-			{
-				for(int i = 0, c = items.Length; i < c; i++)
-				{
-					Add(items[i]);
-				}
-			}
+
 		}
 
 		#region Core
