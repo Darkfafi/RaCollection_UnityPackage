@@ -39,6 +39,46 @@ namespace RaCollection
 			}
 		}
 
+		#region Queue
+
+		public void Queue(TItem item)
+		{
+			Insert(0, item);
+		}
+
+		public TItem Dequeue()
+		{
+			TryRemoveAt(0, out TItem item, throwIndexOutOfRangeException: true);
+			return item;
+		}
+
+		public bool TryDequeue(out TItem item)
+		{
+			return TryRemoveAt(0, out item);
+		}
+
+		#endregion
+
+		#region Stack
+
+		public void Push(TItem item)
+		{
+			Add(item);
+		}
+
+		public TItem Pop()
+		{
+			TryRemoveAt(Count - 1, out TItem item, throwIndexOutOfRangeException: true);
+			return item;
+		}
+
+		public bool TryPop(out TItem item)
+		{
+			return TryRemoveAt(Count - 1, out item);
+		}
+
+		#endregion
+
 		#region Helper
 
 		public bool TryGetItem<T>(out T item, Predicate<T> predicate = null)
@@ -125,12 +165,31 @@ namespace RaCollection
 
 		public void RemoveAt(int index)
 		{
-			var item = _items[index];
-			if(IsValidRemoveCheck(item, nameof(RemoveAt)))
+			TryRemoveAt(index, out _, throwIndexOutOfRangeException: true);
+		}
+
+		public bool TryRemoveAt(int index, out TItem item, bool throwIndexOutOfRangeException = false)
+		{
+			try
 			{
-				_items.RemoveAt(index);
-				OnRemoveItem(item, index);
+				item = _items[index];
+				if(IsValidRemoveCheck(item, nameof(RemoveAt)))
+				{
+					_items.RemoveAt(index);
+					OnRemoveItem(item, index);
+					return true;
+				}
 			}
+			catch(IndexOutOfRangeException indexException)
+			{
+				if(throwIndexOutOfRangeException)
+				{
+					throw indexException;
+				}
+			}
+
+			item = default;
+			return false;
 		}
 
 		public void Add(TItem item)

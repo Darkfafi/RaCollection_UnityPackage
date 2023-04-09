@@ -6,6 +6,16 @@ namespace RaCollection
 	public static class RaCollectionUtils
 	{
 		// List
+		public static bool HasItems<TItem>(this IList<TItem> self)
+		{
+			return self != null && self.Count > 0;
+		}
+
+		public static bool IsInBounds<TItem>(this IList<TItem> self, int index)
+		{
+			return self != null && index >= 0 && index < self.Count;
+		}
+
 		public static void ForEach<TItem>(this IList<TItem> self, ItemHandler<TItem> action)
 		{
 			for(int i = 0, c = self.Count; i < c; i++)
@@ -114,6 +124,16 @@ namespace RaCollection
 		}
 
 		// ReadOnly List
+		public static bool HasItemsReadOnly<TItem>(this IReadOnlyList<TItem> self)
+		{
+			return self != null && self.Count > 0;
+		}
+
+		public static bool IsInBoundsReadOnly<TItem>(this IReadOnlyList<TItem> self, int index)
+		{
+			return self != null && index >= 0 && index < self.Count;
+		}
+
 		public static void ForEachReadOnly<TItem>(this IReadOnlyList<TItem> self, ItemHandler<TItem> action)
 		{
 			for(int i = 0, c = self.Count; i < c; i++)
