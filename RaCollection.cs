@@ -27,12 +27,12 @@ namespace RaCollection
 			_onRemoveItem = onRemoveItem;
 		}
 
-		public RaCollection(TItem[] items, ItemIndexHandler<TItem> onAddItem = null, ItemIndexHandler<TItem> onRemoveItem = null)
+		public RaCollection(IList<TItem> items, ItemIndexHandler<TItem> onAddItem = null, ItemIndexHandler<TItem> onRemoveItem = null)
 			: this(onAddItem, onRemoveItem)
 		{
-			if(items != null && items.Length > 0)
+			if(items != null && items.Count > 0)
 			{
-				for(int i = 0, c = items.Length; i < c; i++)
+				for(int i = 0, c = items.Count; i < c; i++)
 				{
 					Add(items[i]);
 				}

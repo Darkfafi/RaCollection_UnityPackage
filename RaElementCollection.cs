@@ -76,7 +76,7 @@ namespace RaCollection
 		{
 		}
 
-		public RaElementCollection(TElement[] items, ItemIndexHandler<TElement> onAddItem = null, ItemIndexHandler<TElement> onRemoveItem = null)
+		public RaElementCollection(IList<TElement> items, ItemIndexHandler<TElement> onAddItem = null, ItemIndexHandler<TElement> onRemoveItem = null)
 			: base(items, onAddItem, onRemoveItem)
 		{
 
