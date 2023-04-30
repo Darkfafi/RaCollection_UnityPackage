@@ -1,6 +1,9 @@
 # Changelog RaCollection
 
-## v1.4.0 - 09/04//2023
+## v1.4.1 - 30/04/2023
+* Made it so RaCollection & RaElementCollection accept an IList instead of an array, to allow for both passing of Lists as Arrays
+
+## v1.4.0 - 09/04/2023
 * Implemented Queue & Stack data structures into RaCollection
 * Added HasItems & IsInBounds util methods
 * Added RaCollectionRandomUtils
