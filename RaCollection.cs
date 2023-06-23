@@ -24,7 +24,7 @@ namespace RaCollection
 
 		public bool IsReadOnly => false;
 
-		public RaCollection(ItemIndexHandler<TItem> onAddItem = null, ItemIndexHandler<TItem> onRemoveItem = null)
+		public RaCollection(ItemIndexHandler<TItem> onAddItem, ItemIndexHandler<TItem> onRemoveItem)
 		{
 			_onAddItem = onAddItem;
 			_onRemoveItem = onRemoveItem;
@@ -36,6 +36,12 @@ namespace RaCollection
 			{
 				Add(itemsToAdd[i]);
 			}
+		}
+
+		public RaCollection()
+			: this(null, null)
+		{
+
 		}
 
 		public RaCollection(IList<TItem> items, ItemIndexHandler<TItem> onAddItem = null, ItemIndexHandler<TItem> onRemoveItem = null)
