@@ -81,6 +81,8 @@ namespace RaCollection
 			return false;
 		}
 
+		public bool HasValue<T>(Predicate<T> predicate = null) => TryGetValue(out _, predicate);
+
 		public bool TryGetValue<T>(out T value, Predicate<T> predicate = null)
 		{
 			if(_entries.TryGetItem(out Entry entry, x => x.Value is T castedValue && (predicate == null || predicate(castedValue))))

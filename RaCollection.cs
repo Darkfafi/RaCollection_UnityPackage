@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace RaCollection
 {
@@ -8,11 +9,13 @@ namespace RaCollection
 	public delegate void ItemsHandler<TItem>(TItem newItem, TItem oldItem);
 	public delegate void ItemIndexHandler<TItem>(TItem item, int index);
 
+	[Serializable]
 	public class RaCollection<TItem> : IList<TItem>, IReadOnlyRaCollection<TItem>, IDisposable
 	{
 		public event ItemIndexHandler<TItem> AddedItemEvent;
 		public event ItemIndexHandler<TItem> RemovedItemEvent;
 
+		[SerializeField]
 		private List<TItem> _items = new List<TItem>();
 		private ItemIndexHandler<TItem> _onAddItem = null;
 		private ItemIndexHandler<TItem> _onRemoveItem = null;
@@ -25,6 +28,14 @@ namespace RaCollection
 		{
 			_onAddItem = onAddItem;
 			_onRemoveItem = onRemoveItem;
+
+			TItem[] itemsToAdd = _items.ToArray();
+			_items.Clear();
+
+			for(int i = 0, c = itemsToAdd.Length; i < c; i++)
+			{
+				Add(itemsToAdd[i]);
+			}
 		}
 
 		public RaCollection(IList<TItem> items, ItemIndexHandler<TItem> onAddItem = null, ItemIndexHandler<TItem> onRemoveItem = null)

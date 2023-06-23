@@ -14,6 +14,7 @@ namespace RaCollection
 		string[] GetAllIds();
 	}
 
+	[Serializable]
 	public class RaElementCollection<TElement> : RaCollection<TElement>, IReadOnlyRaElementCollection<TElement>
 		where TElement : IRaCollectionElement
 	{
