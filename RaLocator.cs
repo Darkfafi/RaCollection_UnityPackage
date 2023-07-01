@@ -5,8 +5,8 @@ namespace RaCollection
 {
 	public interface IRaLocator
 	{
-		T GetValue<T>(string key);
-		T GetValue<T>(Predicate<T> predicate = null);
+		T GetValue<T>(string key, T defaultValue);
+		T GetValue<T>(T defaultValue, Predicate<T> predicate = null);
 		List<T> GetValues<T>(Predicate<T> predicate = null);
 		bool TryGetValue<T>(string key, out T value);
 		bool TryGetValue<T>(out T value, Predicate<T> predicate = null);
@@ -39,22 +39,22 @@ namespace RaCollection
 			_entries.Remove(key);
 		}
 
-		public T GetValue<T>(string key)
+		public T GetValue<T>(string key, T defaultValue)
 		{
 			if(TryGetValue(key, out T value))
 			{
 				return value;
 			}
-			return default;
+			return defaultValue;
 		}
 
-		public T GetValue<T>(Predicate<T> predicate = null)
+		public T GetValue<T>(T defaultValue, Predicate<T> predicate = null)
 		{
 			if(TryGetValue(out T value, predicate))
 			{
 				return value;
 			}
-			return default;
+			return defaultValue;
 		}
 
 		public List<T> GetValues<T>(Predicate<T> predicate = null)
