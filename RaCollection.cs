@@ -58,7 +58,7 @@ namespace RaCollection
 
 		#region Queue
 
-		public void Queue(TItem item)
+		public void Enqueue(TItem item)
 		{
 			Insert(0, item);
 		}
