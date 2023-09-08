@@ -1,5 +1,11 @@
 # Changelog RaCollection
 
+## v1.4.2 - 08/09/2023
+* Made it so the RaCollection & RaElementCollection can be serialized within the editor (for debugging or linking purposes)
+* Added Empty constructors to the Collections
+* Default value requirement added to GetValue within the RaLocator
+* Corrected method name Queue to Enqueue
+
 ## v1.4.1 - 30/04/2023
 * Made it so RaCollection & RaElementCollection accept an IList instead of an array, to allow for both passing of Lists as Arrays
 
