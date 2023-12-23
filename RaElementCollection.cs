@@ -56,7 +56,13 @@ namespace RaCollection
 
 		public bool Remove(string id)
 		{
-			if(_idToElementsMap.TryGetValue(id, out TElement item))
+			return Remove(id, out _);
+		}
+
+
+		public bool Remove(string id, out TElement item)
+		{
+			if (_idToElementsMap.TryGetValue(id, out item))
 			{
 				return Remove(item);
 			}
