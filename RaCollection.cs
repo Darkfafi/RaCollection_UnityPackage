@@ -74,6 +74,23 @@ namespace RaCollection
 			return TryRemoveAt(0, out item);
 		}
 
+		public TItem PeekQueue()
+		{
+			return _items[0];
+		}
+
+		public bool TryPeekQueue(out TItem item)
+		{
+			if (Count > 0)
+			{
+				item = _items[0];
+				return true;
+			}
+
+			item = default;
+			return false;
+		}
+
 		#endregion
 
 		#region Stack
@@ -92,6 +109,23 @@ namespace RaCollection
 		public bool TryPop(out TItem item)
 		{
 			return TryRemoveAt(Count - 1, out item);
+		}
+
+		public TItem PeekStack()
+		{
+			return _items[Count - 1];
+		}
+
+		public bool TryPeekStack(out TItem item)
+		{
+			if(Count > 0)
+			{
+				item = _items[Count - 1];
+				return true;
+			}
+
+			item = default;
+			return false;
 		}
 
 		#endregion
