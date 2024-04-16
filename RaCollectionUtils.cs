@@ -85,6 +85,23 @@ namespace RaCollection
 			return false;
 		}
 
+		public static List<TItem> CutItems<TItem>(this List<TItem> self, Predicate<TItem> predicate)
+		{
+			List<TItem> returnValue = new List<TItem>();
+
+			for(int i = self.Count - 1; i >= 0; i--)
+			{
+				TItem item = self[i];
+				if(predicate == null || predicate(item))
+				{
+					self.RemoveAt(i);
+					returnValue.Insert(0, item);
+				}
+			}
+
+			return returnValue;
+		}
+
 		public static List<TItem> GetItems<TItem>(this IList<TItem> self, Predicate<TItem> predicate)
 		{
 			List<TItem> returnValue = new List<TItem>();
