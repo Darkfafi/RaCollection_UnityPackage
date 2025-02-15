@@ -15,6 +15,7 @@ namespace RaCollection
 		public event ItemsHandler<TItem> PriorityItemChangedEvent;
 		public event ItemIndexHandler<TItem> AddedItemEvent;
 		public event ItemIndexHandler<TItem> RemovedItemEvent;
+		public event Action DirtyEvent;
 
 		private RaCollection<Entry> _priorityEntries;
 		private RaCollection<TItem> _values;
@@ -57,6 +58,8 @@ namespace RaCollection
 				_priorityItemChangedEvent?.Invoke(item.Value, prePrioItem);
 				PriorityItemChangedEvent?.Invoke(item.Value, prePrioItem);
 			}
+
+			DirtyEvent?.Invoke();
 		}
 
 		private void OnRemovedEntry(Entry item, int index)
@@ -78,6 +81,8 @@ namespace RaCollection
 				_priorityItemChangedEvent?.Invoke(newPrioItem, item.Value);
 				PriorityItemChangedEvent?.Invoke(newPrioItem, item.Value);
 			}
+
+			DirtyEvent?.Invoke();
 		}
 
 		public bool TryGetPriorityItem(out TItem priorityItem)
@@ -135,7 +140,8 @@ namespace RaCollection
 		{
 			AddedItemEvent = null;
 			RemovedItemEvent = null;
-			
+			DirtyEvent = null;
+
 			_onAddItem = null;
 			_onRemoveItem = null;
 

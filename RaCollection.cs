@@ -14,6 +14,7 @@ namespace RaCollection
 	{
 		public event ItemIndexHandler<TItem> AddedItemEvent;
 		public event ItemIndexHandler<TItem> RemovedItemEvent;
+		public event Action DirtyEvent;
 
 		[SerializeField]
 		private List<TItem> _items = new List<TItem>();
@@ -265,6 +266,7 @@ namespace RaCollection
 		{
 			AddedItemEvent = null;
 			RemovedItemEvent = null;
+			DirtyEvent = null;
 			_onAddItem = null;
 			_onRemoveItem = null;
 			_items.Clear();
@@ -280,12 +282,14 @@ namespace RaCollection
 		{
 			_onAddItem?.Invoke(item, index);
 			AddedItemEvent?.Invoke(item, index);
+			DirtyEvent?.Invoke();
 		}
 
 		protected virtual void OnRemoveItem(TItem item, int index)
 		{
 			_onRemoveItem?.Invoke(item, index);
 			RemovedItemEvent?.Invoke(item, index);
+			DirtyEvent?.Invoke();
 		}
 
 		protected virtual bool IsValidAddCheck(TItem item, string operationName) => true;
@@ -298,6 +302,7 @@ namespace RaCollection
 	{
 		public event ItemIndexHandler<TItem> AddedItemEvent;
 		public event ItemIndexHandler<TItem> RemovedItemEvent;
+		public event Action DirtyEvent;
 
 		bool Contains(TItem item);
 	}
