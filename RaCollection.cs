@@ -305,5 +305,12 @@ namespace RaCollection
 		public event Action DirtyEvent;
 
 		bool Contains(TItem item);
+
+		public TItem PeekStack();
+		public bool TryPeekStack(out TItem item);
+
+		public TItem PeekQueue();
+
+		public bool TryPeekQueue(out TItem item);
 	}
 }
