@@ -43,7 +43,7 @@ namespace RaCollection
 		{
 			TItem prePrioItem = default;
 
-			if(index == 0)
+			if (index == 0)
 			{
 				TryGetPriorityItem(out prePrioItem);
 			}
@@ -53,7 +53,7 @@ namespace RaCollection
 			_onAddItem?.Invoke(item.Value, index);
 			AddedItemEvent?.Invoke(item.Value, index);
 
-			if(index == 0)
+			if (index == 0)
 			{
 				_priorityItemChangedEvent?.Invoke(item.Value, prePrioItem);
 				PriorityItemChangedEvent?.Invoke(item.Value, prePrioItem);
@@ -68,7 +68,7 @@ namespace RaCollection
 
 			TItem newPrioItem = default;
 
-			if(index == 0)
+			if (index == 0)
 			{
 				TryGetPriorityItem(out newPrioItem);
 			}
@@ -76,7 +76,7 @@ namespace RaCollection
 			_onRemoveItem?.Invoke(item.Value, index);
 			RemovedItemEvent?.Invoke(item.Value, index);
 
-			if(index == 0)
+			if (index == 0)
 			{
 				_priorityItemChangedEvent?.Invoke(newPrioItem, item.Value);
 				PriorityItemChangedEvent?.Invoke(newPrioItem, item.Value);
@@ -87,7 +87,7 @@ namespace RaCollection
 
 		public bool TryGetPriorityItem(out TItem priorityItem)
 		{
-			if(_values.Count > 0)
+			if (_values.Count > 0)
 			{
 				priorityItem = _values[0];
 				return true;
@@ -99,10 +99,10 @@ namespace RaCollection
 
 		public bool Remove(TItem item)
 		{
-			for(int i = 0, c = _priorityEntries.Count; i < c; i++)
+			for (int i = 0, c = _priorityEntries.Count; i < c; i++)
 			{
 				Entry entry = _priorityEntries[i];
-				if(entry.Value.Equals(item))
+				if (entry.Value.Equals(item))
 				{
 					RemoveAt(i);
 					return true;
@@ -120,9 +120,9 @@ namespace RaCollection
 		{
 			Entry entry = new Entry(priority, item);
 			int count = _priorityEntries.Count;
-			for(int i = 0; i < count; i++)
+			for (int i = 0; i < count; i++)
 			{
-				if(priority > _priorityEntries[i].Priority)
+				if (priority > _priorityEntries[i].Priority)
 				{
 					_priorityEntries.Insert(i, entry);
 					return;
@@ -151,6 +151,11 @@ namespace RaCollection
 			_priorityEntries = null;
 			_values = null;
 		}
+
+		public TItem PeekStack() => _values.PeekStack();
+		public bool TryPeekStack(out TItem item) => _values.TryPeekStack(out item);
+		public TItem PeekQueue() => _values.PeekQueue();
+		public bool TryPeekQueue(out TItem item) => _values.TryPeekQueue(out item);
 
 		public struct Entry
 		{
