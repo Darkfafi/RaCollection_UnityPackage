@@ -54,6 +54,37 @@ namespace RaCollection
 
 		#region Core
 
+		public void Trim(string[] ids)
+		{
+			HashSet<string> idsToKeep = new HashSet<string>(ids);
+			string[] currentIds = GetAllIds();
+
+			for (int i = currentIds.Length - 1; i >= 0; i--)
+			{
+				var id = currentIds[i];
+				if (!idsToKeep.Contains(id))
+				{
+					Remove(id);
+				}
+			}
+		}
+
+		public void AddRange(IList<TElement> elements, bool trim)
+		{
+			string[] ids = new string[elements.Count];
+			for (int i = 0, c = elements.Count; i < c; i++)
+			{
+				TElement element = elements[i];
+				Add(element);
+				ids[i] = element.Id;
+			}
+
+			if (trim)
+			{
+				Trim(ids);
+			}
+		}
+
 		public bool Remove(string id)
 		{
 			return Remove(id, out _);
@@ -89,8 +120,8 @@ namespace RaCollection
 		
 		}
 
-		public RaElementCollection(IList<TElement> items, ItemIndexHandler<TElement> onAddItem = null, ItemIndexHandler<TElement> onRemoveItem = null)
-			: base(items, onAddItem, onRemoveItem)
+		public RaElementCollection(IList<TElement> elements, ItemIndexHandler<TElement> onAddItem = null, ItemIndexHandler<TElement> onRemoveItem = null)
+			: base(elements, onAddItem, onRemoveItem)
 		{
 
 		}

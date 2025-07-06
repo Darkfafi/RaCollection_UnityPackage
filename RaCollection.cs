@@ -244,9 +244,17 @@ namespace RaCollection
 			return false;
 		}
 
+		public void AddRange(IList<TItem> items)
+		{
+			for (int i = 0, c = items.Count; i < c; i++)
+			{
+				Add(items[i]);
+			}
+		}
+
 		public void Add(TItem item)
 		{
-			if(IsValidAddCheck(item, nameof(Add)))
+			if (IsValidAddCheck(item, nameof(Add)))
 			{
 				int index = _items.Count;
 				_items.Add(item);
