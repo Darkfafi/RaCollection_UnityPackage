@@ -18,6 +18,8 @@ namespace RaCollection
 	public class RaElementCollection<TElement> : RaCollection<TElement>, IReadOnlyRaElementCollection<TElement>
 		where TElement : IRaCollectionElement
 	{
+		public static readonly IReadOnlyRaElementCollection<TElement> EmptyReadOnly = new RaElementCollection<TElement>();
+
 		private Dictionary<string, TElement> _idToElementsMap = new Dictionary<string, TElement>();
 
 		#region Helper
