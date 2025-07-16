@@ -24,6 +24,11 @@ namespace RaCollection
 		public int Count => _items.Count;
 
 		public bool IsReadOnly => false;
+		
+		public bool IsDisposed
+		{
+			get; private set;
+		} 
 
 		public RaCollection(ItemIndexHandler<TItem> onAddItem, ItemIndexHandler<TItem> onRemoveItem)
 		{
@@ -33,7 +38,7 @@ namespace RaCollection
 			TItem[] itemsToAdd = _items.ToArray();
 			_items.Clear();
 
-			for(int i = 0, c = itemsToAdd.Length; i < c; i++)
+			for (int i = 0, c = itemsToAdd.Length; i < c; i++)
 			{
 				Add(itemsToAdd[i]);
 			}
@@ -252,6 +257,19 @@ namespace RaCollection
 			}
 		}
 
+		public bool TryAdd(TItem item)
+		{
+			try
+			{
+				Add(item);
+				return true;
+			}
+			catch
+			{
+				return false;
+			}
+		}
+
 		public void Add(TItem item)
 		{
 			if (IsValidAddCheck(item, nameof(Add)))
@@ -279,6 +297,7 @@ namespace RaCollection
 			_onRemoveItem = null;
 			_items.Clear();
 			_items = null;
+			IsDisposed = true;
 		}
 
 		public void CopyTo(TItem[] array, int arrayIndex) => _items.CopyTo(array, arrayIndex);
@@ -311,6 +330,11 @@ namespace RaCollection
 		public event ItemIndexHandler<TItem> AddedItemEvent;
 		public event ItemIndexHandler<TItem> RemovedItemEvent;
 		public event Action DirtyEvent;
+		
+		public bool IsDisposed
+		{
+			get;
+		}
 
 		bool Contains(TItem item);
 

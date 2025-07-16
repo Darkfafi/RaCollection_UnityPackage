@@ -29,6 +29,11 @@ namespace RaCollection
 		public IReadOnlyRaCollection<Entry> Entries => _priorityEntries;
 		public int Count => _priorityEntries.Count;
 
+		public bool IsDisposed
+		{
+			get; private set;
+		}
+
 		public RaPriorityCollection(ItemsHandler<TItem> onPriorityItemChanged = null, ItemIndexHandler<TItem> onAddItem = null, ItemIndexHandler<TItem> onRemoveItem = null)
 		{
 			_priorityItemChangedEvent = onPriorityItemChanged;
@@ -150,6 +155,8 @@ namespace RaCollection
 
 			_priorityEntries = null;
 			_values = null;
+
+			IsDisposed = true;
 		}
 
 		public TItem PeekStack() => _values.PeekStack();

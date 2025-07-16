@@ -18,7 +18,7 @@ namespace RaCollection
 
 		public static void ForEach<TItem>(this IList<TItem> self, ItemHandler<TItem> action)
 		{
-			for(int i = 0, c = self.Count; i < c; i++)
+			for (int i = 0, c = self.Count; i < c; i++)
 			{
 				action(self[i]);
 			}
@@ -26,7 +26,7 @@ namespace RaCollection
 
 		public static void ForEach<TItem>(this IList<TItem> self, ItemIndexHandler<TItem> action)
 		{
-			for(int i = 0, c = self.Count; i < c; i++)
+			for (int i = 0, c = self.Count; i < c; i++)
 			{
 				action(self[i], i);
 			}
@@ -34,7 +34,7 @@ namespace RaCollection
 
 		public static void ForEachReverse<TItem>(this IList<TItem> self, ItemHandler<TItem> action)
 		{
-			for(int i = self.Count - 1; i >= 0; i--)
+			for (int i = self.Count - 1; i >= 0; i--)
 			{
 				action(self[i]);
 			}
@@ -42,7 +42,7 @@ namespace RaCollection
 
 		public static void ForEachReverse<TItem>(this IList<TItem> self, ItemIndexHandler<TItem> action)
 		{
-			for(int i = self.Count - 1; i >= 0; i--)
+			for (int i = self.Count - 1; i >= 0; i--)
 			{
 				action(self[i], i);
 			}
@@ -50,10 +50,10 @@ namespace RaCollection
 
 		public static bool TryGetItem<TItem>(this IList<TItem> self, out TItem item, Predicate<TItem> predicate = null)
 		{
-			for(int i = 0, c = self.Count; i < c; i++)
+			for (int i = 0, c = self.Count; i < c; i++)
 			{
 				item = self[i];
-				if(predicate == null || predicate(item))
+				if (predicate == null || predicate(item))
 				{
 					return true;
 				}
@@ -71,10 +71,10 @@ namespace RaCollection
 
 		public static bool TryFindItem<TItem, T>(this IList<TItem> self, out T item, Predicate<T> predicate = null)
 		{
-			for(int i = 0, c = self.Count; i < c; i++)
+			for (int i = 0, c = self.Count; i < c; i++)
 			{
 				TItem rawItem = self[i];
-				if(rawItem is T castedItem && (predicate == null || predicate(castedItem)))
+				if (rawItem is T castedItem && (predicate == null || predicate(castedItem)))
 				{
 					item = castedItem;
 					return true;
@@ -89,10 +89,10 @@ namespace RaCollection
 		{
 			List<TItem> returnValue = new List<TItem>();
 
-			for(int i = self.Count - 1; i >= 0; i--)
+			for (int i = self.Count - 1; i >= 0; i--)
 			{
 				TItem item = self[i];
-				if(predicate == null || predicate(item))
+				if (predicate == null || predicate(item))
 				{
 					self.RemoveAt(i);
 					returnValue.Insert(0, item);
@@ -106,10 +106,10 @@ namespace RaCollection
 		{
 			List<TItem> returnValue = new List<TItem>();
 
-			for(int i = 0, c = self.Count; i < c; i++)
+			for (int i = 0, c = self.Count; i < c; i++)
 			{
 				TItem item = self[i];
-				if(predicate == null || predicate(item))
+				if (predicate == null || predicate(item))
 				{
 					returnValue.Add(item);
 				}
@@ -128,10 +128,10 @@ namespace RaCollection
 		{
 			List<T> returnValue = new List<T>();
 
-			for(int i = 0, c = self.Count; i < c; i++)
+			for (int i = 0, c = self.Count; i < c; i++)
 			{
 				TItem rawItem = self[i];
-				if(rawItem is T castedItem && (predicate == null || predicate(castedItem)))
+				if (rawItem is T castedItem && (predicate == null || predicate(castedItem)))
 				{
 					returnValue.Add(castedItem);
 				}
@@ -153,7 +153,7 @@ namespace RaCollection
 
 		public static void ForEachReadOnly<TItem>(this IReadOnlyList<TItem> self, ItemHandler<TItem> action)
 		{
-			for(int i = 0, c = self.Count; i < c; i++)
+			for (int i = 0, c = self.Count; i < c; i++)
 			{
 				action(self[i]);
 			}
@@ -161,7 +161,7 @@ namespace RaCollection
 
 		public static void ForEachReadOnly<TItem>(this IReadOnlyList<TItem> self, ItemIndexHandler<TItem> action)
 		{
-			for(int i = 0, c = self.Count; i < c; i++)
+			for (int i = 0, c = self.Count; i < c; i++)
 			{
 				action(self[i], i);
 			}
@@ -169,7 +169,7 @@ namespace RaCollection
 
 		public static void ForEachReverseReadOnly<TItem>(this IReadOnlyList<TItem> self, ItemHandler<TItem> action)
 		{
-			for(int i = self.Count - 1; i >= 0; i--)
+			for (int i = self.Count - 1; i >= 0; i--)
 			{
 				action(self[i]);
 			}
@@ -177,7 +177,7 @@ namespace RaCollection
 
 		public static void ForEachReverseReadOnly<TItem>(this IReadOnlyList<TItem> self, ItemIndexHandler<TItem> action)
 		{
-			for(int i = self.Count - 1; i >= 0; i--)
+			for (int i = self.Count - 1; i >= 0; i--)
 			{
 				action(self[i], i);
 			}
@@ -185,10 +185,10 @@ namespace RaCollection
 
 		public static bool TryGetItemReadOnly<TItem>(this IReadOnlyList<TItem> self, out TItem item, Predicate<TItem> predicate = null)
 		{
-			for(int i = 0, c = self.Count; i < c; i++)
+			for (int i = 0, c = self.Count; i < c; i++)
 			{
 				item = self[i];
-				if(predicate == null || predicate(item))
+				if (predicate == null || predicate(item))
 				{
 					return true;
 				}
@@ -206,10 +206,10 @@ namespace RaCollection
 
 		public static bool TryFindItemReadOnly<TItem, T>(this IReadOnlyList<TItem> self, out T item, Predicate<T> predicate = null)
 		{
-			for(int i = 0, c = self.Count; i < c; i++)
+			for (int i = 0, c = self.Count; i < c; i++)
 			{
 				TItem rawItem = self[i];
-				if(rawItem is T castedItem && (predicate == null || predicate(castedItem)))
+				if (rawItem is T castedItem && (predicate == null || predicate(castedItem)))
 				{
 					item = castedItem;
 					return true;
@@ -224,10 +224,10 @@ namespace RaCollection
 		{
 			List<TItem> returnValue = new List<TItem>();
 
-			for(int i = 0, c = self.Count; i < c; i++)
+			for (int i = 0, c = self.Count; i < c; i++)
 			{
 				TItem item = self[i];
-				if(predicate == null || predicate(item))
+				if (predicate == null || predicate(item))
 				{
 					returnValue.Add(item);
 				}
@@ -246,10 +246,10 @@ namespace RaCollection
 		{
 			List<T> returnValue = new List<T>();
 
-			for(int i = 0, c = self.Count; i < c; i++)
+			for (int i = 0, c = self.Count; i < c; i++)
 			{
 				TItem rawItem = self[i];
-				if(rawItem is T castedItem && (predicate == null || predicate(castedItem)))
+				if (rawItem is T castedItem && (predicate == null || predicate(castedItem)))
 				{
 					returnValue.Add(castedItem);
 				}
