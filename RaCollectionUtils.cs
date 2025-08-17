@@ -63,6 +63,20 @@ namespace RaCollection
 			return false;
 		}
 
+		public static int GetIndexOf<TItem>(this IList<TItem> self, Predicate<TItem> predicate = null)
+		{
+			for (int i = 0, c = self.Count; i < c; i++)
+			{
+				var item = self[i];
+				if (predicate == null || predicate(item))
+				{
+					return i;
+				}
+			}
+
+			return -1;
+		}
+
 		public static bool TryGetItem<TItem, T>(this IList<TItem> self, out T item, Predicate<T> predicate = null)
 			where T : TItem
 		{
@@ -181,6 +195,20 @@ namespace RaCollection
 			{
 				action(self[i], i);
 			}
+		}
+
+		public static int GetIndexOfReadOnly<TItem>(this IReadOnlyList<TItem> self, Predicate<TItem> predicate = null)
+		{
+			for (int i = 0, c = self.Count; i < c; i++)
+			{
+				var item = self[i];
+				if (predicate == null || predicate(item))
+				{
+					return i;
+				}
+			}
+
+			return -1;
 		}
 
 		public static bool TryGetItemReadOnly<TItem>(this IReadOnlyList<TItem> self, out TItem item, Predicate<TItem> predicate = null)
